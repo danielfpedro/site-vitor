@@ -11,11 +11,15 @@
 
     <title>Coreguard</title>
 
+    <link rel="shortcut icon" href="favicon.png"> 
+
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/grayscale.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="bower_components/sweetalert/dist/sweetalert.css">
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -53,6 +57,9 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
+                        <a class="page-scroll" href="#inicio">Início</a>
+                    </li>
+                    <li>
                         <a class="page-scroll" href="#sobre">Sobre</a>
                     </li>
                     <li>
@@ -66,7 +73,7 @@
     </nav>
 
     <!-- Intro Header -->
-    <header class="intro">
+    <header id="inicio" class="intro">
         <div class="intro-body">
             <div class="container">
                 <div class="row">
@@ -75,7 +82,7 @@
                         <p class="intro-text">
 							Avaliações preventivas para revelar vulnerabilidades antes que um hacker as explore.
                         </p>
-                        <a href="#about" class="btn btn-circle page-scroll">
+                        <a href="#sobre" class="btn btn-circle page-scroll">
                             <i class="fa fa-angle-double-down animated"></i>
                         </a>
                     </div>
@@ -96,6 +103,9 @@
 	                <p>
 						As consequências de um ataque em sites ou sistemas podem ser drásticas, exposição de dados sigilosos da empresa ou de terceiros podem acarretar <span class="text-mark">perda financeira e de credibilidade</span>.
 	                </p>
+                    <a href="#servicos-e-contato" class="btn btn-circle page-scroll">
+                        <i class="fa fa-angle-double-down animated"></i>
+                    </a>
 	            </div>
 	        </div>
         </div>
@@ -115,30 +125,63 @@
     </section> -->
 
     <section id="servicos-e-contato">
-    	<div class="container content-section text-center">
+    	<div class="container content-section">
 	    	<div class="row">
 	    		<div class="col-md-12">
 	    			
 	    		</div>
-	    		<div class="col-md-6 text-left">
-	    			<h1>Serviços</h1>
-	                <p>Consultoria, Auditoria de Segurança, Análise de Vulnerabilidade, Revisão Automatizada da Aplicação e Teste de invasão. <span class="text-mark">Entre me contato</span> e agende uma visita.</p>
+	    		<div class="col-md-6">
+	    			<h2>Serviços</h2>
+                    <p>
+                        Consultoria, Análise de Vulnerabilidade, Revisão Automatizada da Aplicação e Teste de invasão. <span class="text-mark">Entre em contato e agende uma visita.</span> 
+                    </p>
 	    		</div>
 	    		<div class="col-md-5 col-md-offset-1 text-center">
-			    	<form>
+			    	<form class="form-contato">
 						<div class="form-group">
-			    			<input type="text" class="form-control input-lg" placeholder="Nome">
+			    			<input
+                                id="nome"
+                                type="text"
+                                class="form-control input-lg"
+                                placeholder="Nome"
+                                required>
 			    		</div>
 			    		<div class="form-group">
-			    			<input type="text" class="form-control input-lg" placeholder="Email">
+			    			<input
+                                id="email"
+                                type="email"
+                                class="form-control input-lg"
+                                placeholder="Email"
+                                required>
 			    		</div>
 						<div class="form-group">
-			    			<textarea rows="6" placeholder="Mensagem..." class="form-control input-lg"></textarea>
+			    			<textarea
+                                id="mensagem"
+                                rows="6"
+                                placeholder="Mensagem..."
+                                class="form-control input-lg"
+                                required></textarea>
 			    		</div>
 			    		<div class="form-group">
-			    			<button class="btn btn-default btn-lg pull-left">
-			    				<span class="fa fa-envelope"></span>&nbsp;&nbsp;Enviar
-			    			</button>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <button
+                                        type="submit"
+                                        id="btn-enviar-contato"
+                                        class="btn btn-default btn-lg pull-left btn-block">
+                                        <span class="fa fa-envelope"></span>&nbsp;&nbsp;<span class="btn-label">Enviar</span>
+                                    </button>  
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="progress" id="contato-loader" style="margin-top: 15px;">
+                                        <div
+                                            class="progress-bar progress-bar-coreguard progress-bar-striped active"
+                                            role="progressbar"
+                                            style="width: 100%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 			    		</div>
 			    	</form>	
 	    		</div>
@@ -162,11 +205,41 @@
     <!-- Plugin JavaScript -->
     <script src="js/jquery.easing.min.js"></script>
 
-    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
-
     <!-- Custom Theme JavaScript -->
     <script src="js/grayscale.js"></script>
+
+    <script type="text/javascript" src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            $('.form-contato').submit(function(){
+                $loader = $('#contato-loader');
+                $loader.fadeIn('fast');
+                var $btn = $('#btn-enviar-contato');
+                var $label = $btn.find('span.btn-label');
+                var currentText = $label.text();
+                $btn.attr('disabled', true);
+                $label.text('Enviando...');
+                window.setTimeout(function(){
+                    $btn.attr('disabled', false);
+                    $label.text('Enviar');
+                    $loader.fadeOut('fast');
+                    swal({
+                        confirmButtonColor: '#42dca3',
+                        type: 'success',
+                        title: 'Enviado',
+                        text: 'Obrigado pelo contato, responderemos o mais rápido possível.'
+                    });
+
+                    $('#nome').val('');
+                    $('#email').val('');
+                    $('#mensagem').val('');
+                }, 2000);
+
+                return false;
+            });
+        });
+    </script>
 
 </body>
 

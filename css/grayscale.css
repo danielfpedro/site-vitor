@@ -4,6 +4,10 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+.form-control:focus {
+    border-color: #42dca3;
+}
+
 body {
     width: 100%;
     height: 100%;
@@ -36,14 +40,30 @@ p {
     line-height: 1.5;
 }
 
-@media(min-width:768px) {
-    p {
-        margin: 0 0 35px;
-        font-size: 20px;
-        line-height: 1.6;
+/*XS*/
+@media(max-width: 767px) {
+    h2{
+        font-size: 30px;
+    }
+    #servicos-e-contato {
+        text-align: center!important;
     }
 }
-
+/*SM*/
+@media(min-width:768px) {
+    #servicos-e-contato {
+        text-align: center!important;
+    }
+}
+/*MD*/
+@media(min-width: 992px) {
+    #servicos-e-contato {
+        text-align: left!important;
+    }
+}
+/*LG*/
+@media(min-width: 1200px) {
+}
 a {
     color: #42dca3;
     -webkit-transition: all .2s ease-in-out;
@@ -384,7 +404,7 @@ body {
 
 input, textarea{
     border-radius: 0!important;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: Montserrat,"Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px!important;
 }
 textarea{
@@ -396,4 +416,17 @@ textarea{
 
 #servicos{
     background-color: #111;
+}
+#btn-enviar-contato[disabled]{
+    background-color: #42dca3;
+    border: 0;
+    color: #000;
+}
+
+.progress-bar-coreguard{
+    background-color: #42dca3;
+}
+
+#contato-loader{
+    display: none;
 }
